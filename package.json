@@ -1,0 +1,31 @@
+{
+  "name": "interruptible-ai-tutor",
+  "version": "0.1.0",
+  "description": "可打断的 AI 讲解引擎：分段讲稿、barge-in 上下文锚点、边讲边检索并生成代码与图表，供 AI agent 通过 CLI / REST+SSE / SKILL.md 操控",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "interruptible-ai-tutor": "./src/cli.mjs"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "demo": "node src/cli.mjs --demo",
+    "cli": "node src/cli.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check": "node --check src/engine.mjs && node --check src/server.mjs && node --check src/cli.mjs"
+  },
+  "keywords": [
+    "ai-tutor",
+    "barge-in",
+    "interruptible",
+    "rag",
+    "voice-agent",
+    "whiteboard",
+    "socratic",
+    "agent-controllable"
+  ],
+  "license": "MIT",
+  "private": false
+}

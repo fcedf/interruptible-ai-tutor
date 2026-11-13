@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>可打断的 AI 讲解引擎 · 演示</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<header>
+  <div class="brand">
+    <span class="dot"></span>
+    <h1>可打断的 AI 讲解引擎</h1>
+    <span class="sub">interruptible-ai-tutor · 零依赖演示</span>
+  </div>
+  <div class="status" id="status">未开始</div>
+</header>
+
+<main>
+  <section class="left">
+    <div class="card">
+      <div class="card-head">
+        <h2>讲解</h2>
+        <div class="controls">
+          <button id="btn-start">开始 (RAG)</button>
+          <button id="btn-next" disabled>下一段</button>
+          <button id="btn-pause" disabled>暂停</button>
+          <button id="btn-resume" disabled>继续</button>
+        </div>
+      </div>
+      <div class="narration" id="narration">点击「开始」规划一节课，然后逐段推进。每段讲到一半时随时可以插话。</div>
+      <div class="progress"><div id="progress-bar"></div></div>
+      <div class="meta" id="segment-meta">—</div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>插话 / 提问</h2></div>
+      <div class="ask-row">
+        <input id="question" type="text" placeholder="例如：混合检索怎么做？／能跑段代码吗／RAG 怎么评估" disabled />
+        <button id="btn-interrupt" disabled>插话并打断</button>
+      </div>
+      <div class="hint">提示：勾选「语音打断」后，直接对着麦克风说话即可在朗读中途打断（浏览器 Web Speech API，无需 API key）。</div>
+      <label class="voice-toggle">
+        <input type="checkbox" id="voice-toggle" />
+        <span>语音打断（麦克风）＋ 语音朗读</span>
+      </label>
+      <div class="continue-row" id="continue-row" hidden>
+        <span>回答后如何继续：</span>
+        <button data-mode="resume">续讲</button>
+        <button data-mode="replan">改方向</button>
+        <button data-mode="skip">跳过本段</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>对话记录</h2><button id="btn-clear" class="ghost">清空</button></div>
+      <div class="transcript" id="transcript"></div>
+    </div>
+  </section>
+
+  <section class="right">
+    <div class="card">
+      <div class="card-head"><h2>白板 / 流程图</h2><span class="badge" id="board-count">0 项</span></div>
+      <svg id="board" viewBox="0 0 560 320" role="img" aria-label="讲解流程图"></svg>
+      <div class="board-list" id="board-list"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>生成的代码与输出</h2><span class="badge" id="code-count">0 段</span></div>
+      <div class="code-area" id="code-area"><em>讲解到代码段时，这里会显示现场生成并真实执行的代码与输出。</em></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>大纲</h2></div>
+      <ol class="outline" id="outline"></ol>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>事件流 (SSE)</h2><span class="badge" id="event-count">0</span></div>
+      <div class="events" id="events"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>纯前端演示：Web Speech API 语音打断 + 服务端锚点状态机。真实模型请配 <code>TUTOR_LLM_API_KEY</code>。</span>
+  <span>REST: <code>/api/state</code> · SSE: <code>/api/events</code> · Skill: <code>/SKILL.md</code></span>
+</footer>
+<script type="module" src="/app.js"></script>
+</body>
+</html>
